@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul{    
+            border:1px red solid;     
+            display:inline-block;
+        }
+        </style>
+    <script>
+        let makeList=[{
+            id:"",
+            name: "",
+            category: "",
+            equipment: "",
+            force: "",
+            level:"",
+            mechanic: "",
+            instructions: [],
+            primaryMuscles: [],
+            secondaryMuscles: [],
+        }];
+       
+        window.addEventListener('DOMContentLoaded',()=>{
+             fetch('https://raw.githubusercontent.com/kimbongkum/ict4e/master/exercises.json')
+            .then(res => res.json())
+            .then(exercise => {
+                const arr = Object.values(exercise) 
+                 console.log(arr[0].length)
+                arr.forEach(exercise => {
+                    function test(i){
+                        const li = document.createElement('ul'); 
+                        const name = arr[0][i].name.replaceAll(" ","_")
+                        const name2 = name.replaceAll("/","_")
+                        console.log('name:',name);
+                        li.innerHTML = `
+                        <h1>${arr[0][i].name}</h1>
+                        <li>번호: ${i+1}</li>
+                        <li>근력, 스트레칭: ${arr[0][i].category}</li>
+                        <li>사용 기구: ${arr[0][i].equipment}</li>
+                        <li>풀-푸쉬-스태틱 운동: ${arr[0][i].force}</li>
+                        <li>운동 레벨: ${arr[0][i].level}</li>
+                        <li>고립, 복합: ${arr[0][i].mechanic}</li>
+                        <li>운동 방법: ${arr[0][i].instructions}</li>
+                        <li>메인 타격 부위: ${arr[0][i].primaryMuscles}</li>
+                        <li>보조 타격 부위: ${arr[0][i].secondaryMuscles}</li>
+                        <img src='https://raw.githubusercontent.com/kimbongkum/ict4e/master/exercises/${name2}/images/0.jpg'>`;
+                        document.querySelector('div').appendChild(li);
+                    }
+                    
+                    for(let i=0;i<arr[0].length; i++){
+                        /*
+                        makeList.push({
+                        name: arr[0][i].name,
+                        category: arr[0][i].category,
+                        equipment: arr[0][i].equipment,
+                        force: arr[0][i].force,
+                        level:arr[0][i].level,
+                        mechanic: arr[0][i].mechanic,
+                        instructions: arr[0][i].instructions,
+                        primaryMuscles: arr[0][i].primaryMuscles,
+                        secondaryMuscles: arr[0][i].secondaryMuscles
+                        })
+                        */
+                        test(i);
+
+                    }
+                    
+                })
+                    
+            });
+        })
+ 
+    </script>
+</head>
+<body>
+    <h1>예시</h1>
+    <div>
+    </div>
+</body>
+</html>

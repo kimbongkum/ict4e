@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .container {
+      display: flex;
+      justify-content: space-between; /* 요소 사이 균등 분배 */
+    }
+    h2 {
+      width: 150px;
+    }
+    span{
+        border:2px red solid;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 10px;
+    }
+     ul {
+      list-style-position: inside; /* 점을 텍스트 안으로 */
+      padding-left: 0;             /* 왼쪽 여백 제거 */
+      margin: 0;
+      text-align: left;
+    }
+  </style>
+    <script>
+       let makeListNode=[
+           
+        ];
+        let id = [];
+        let name = [];
+        let category =[];
+        let equipment =[];
+        let force =[];
+        let level =[];
+        let mechanic =[];
+        //let instructions =[];
+        let primaryMuscles =[];
+        let secondaryMuscles =[];
+         let makeDetailList;
+       
+        function search(){
+            makeDetailList = document.querySelector('input').value;
+            makeDetail(makeDetailList,'name')
+        }
+       
+        function makeDetail(currentTarget, nameStr){
+            document.querySelector('#detailPage').innerHTML='';
+            makeDetailList = currentTarget;
+            const filterMakeListNode = makeListNode.filter(res=>{
+                if(nameStr=='name') return res.name.includes(makeDetailList)
+                if(nameStr=='category') return res.category.includes(makeDetailList)
+                if(nameStr=='equipment' && res.equipment != null) return res.equipment.includes(makeDetailList)
+                if(nameStr=='force' && res.force != null) return res.force.includes(makeDetailList)
+                if(nameStr=='level' ) return res.level.includes(makeDetailList)
+                if(nameStr=='mechanic' && res.mechanic != null) return res.mechanic.includes(makeDetailList)
+                if(nameStr=='instructions') return res.instructions.includes(makeDetailList)
+                if(nameStr=='primaryMuscles') return res.primaryMuscles.includes(makeDetailList)
+                if(nameStr=='secondaryMuscles') return res.secondaryMuscles.includes(makeDetailList)
+                }
+            ) 
+            for(let i =0;i<filterMakeListNode.length;i++){            
+                const li = document.createElement('ul'); 
+                const name1 = filterMakeListNode[i].name.replaceAll(" ","_")
+                const name2 = name1.replaceAll("/","_")
+                li.innerHTML = `
+                <h1>${filterMakeListNode[i].name}</h1>
+                <li>category(운동 종류): ${filterMakeListNode[i].category}</li>
+                <li>equipment(사용 기구): ${filterMakeListNode[i].equipment}</li>
+                <li>force(풀-푸쉬-스태틱 운동): ${filterMakeListNode[i].force}</li>
+                <li>level(운동 난이도): ${filterMakeListNode[i].level}</li>
+                <li>mechanic(고립, 복합 운동): ${filterMakeListNode[i].mechanic}</li>
+                <li>instructions(운동 방법): ${filterMakeListNode[i].instructions}</li>
+                <li>primaryMuscles(주 사용 근육): ${filterMakeListNode[i].primaryMuscles}</li>
+                <li>secondaryMuscles(보조 사용 근육): ${filterMakeListNode[i].secondaryMuscles}</li>
+                <img alt="${filterMakeListNode[i].name}" src='https://raw.githubusercontent.com/kimbongkum/ict4e/master/exercises/${name2}/images/0.jpg'>`;
+                document.querySelector('#detailPage').appendChild(li);
+            }
+        }
+       
+        const nameT = name;
+        function makeList(string,changeS){ 
+            document.querySelector('#ListPage').innerHTML='';
+            const arrys = [...new Set(string)];
+            for(let i=0;i<arrys.length; i++) {
+                if(arrys[i] != null) {
+                    li = document.createElement('ul');  
+                    let makeAdd = `makeListNode[${i}].` + changeS;  
+                    switch(changeS){
+                        case 'name':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'name');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(운동 명칭)";
+                            document.querySelector('#bigNameInstructions').innerText="873개의 데이터가 있으며 하나의 운동 종류 마다 10개의 구분이 있다";
+                            break;
+                        case 'category':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'category');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(운동 종류)";
+                            document.querySelector('#bigNameInstructions').innerText="운동 종류에 대한 분류를 나타내는 카테고리. 스트레칭, 파워 리프팅, 유산소 운동 등이 있다";
+                            break;
+                        case 'equipment':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'equipment');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(사용 기구)";
+                            document.querySelector('#bigNameInstructions').innerText="운동 시 사용하는 기구에 대한 분류를 나타내는 카테고리. 맨몸 운동, 케틀벨, 머신 등이 있다.";
+                            break;
+                        case 'force':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'force');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(풀-푸쉬-스태틱 운동)";
+                            document.querySelector('#bigNameInstructions').innerText="근력 운동의 한 종류로, 몸을 당기는 동작(pull), 미는 동작(push), 그리고 움직임 없이 힘을 유지하는 동작(static, 등척성 운동)을 결합한 방식이다.";
+                            break;
+                        case 'level':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'level');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(운동 난이도)";
+                            document.querySelector('#bigNameInstructions').innerText="운동 수행 능력에 대한 난이도 분류 카테고리로 expert > intermediate > beginner 순으로 나뉜다.";
+                            break;
+                        case 'mechanic':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'mechanic');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(고립, 복합 운동)";
+                            document.querySelector('#bigNameInstructions').innerText="Compound (복합 운동)	여러 관절과 여러 근육을 동시에 사용하는 운동, Isolation (고립 운동)	특정 근육이나 근육군 하나만 집중적으로 단독 자극하는 운동";
+                            break
+                        case 'primaryMuscles':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'primaryMuscles');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(주 사용 근육)";
+                            document.querySelector('#bigNameInstructions').innerText="해당 운동에 사용되는 주요 타격 근육 카테고리";
+                            break;
+                        case 'secondaryMuscles':
+                            li.innerHTML = `<li><a href="#" id="${arrys[i]}" onclick="makeDetail(event.currentTarget.id,'secondaryMuscles');">${arrys[i]}</a></li>`;
+                            document.querySelector('#bigName').innerText=changeS+"(보조 사용 근육)";
+                            document.querySelector('#bigNameInstructions').innerText="해당 운동에 사용되는 보조 타격 근육 카테고리";
+                            break;
+                        default: 
+                            console.log('exercises list No Data')
+                    }
+                    document.querySelector('#ListPage').appendChild(li);
+                }
+            }
+        }
+            
+        window.addEventListener('DOMContentLoaded',()=>{
+            fetch('https://raw.githubusercontent.com/kimbongkum/ict4e/master/exercises.json')
+            .then(res =>res.json())
+            .then(exercise => {
+                
+                arr = Object.values(exercise)[0]
+                for (let i=0;i<arr.length;i++) {
+                    id.push(arr[i].id)
+                    name.push(arr[i].name)
+                    category.push(arr[i].category);
+                    equipment.push(arr[i].equipment);
+                    force.push(arr[i].force);
+                    level.push(arr[i].level);
+                    mechanic.push(arr[i].mechanic);
+                    primaryMuscles.push(arr[i].primaryMuscles[0]);
+                    secondaryMuscles.push(arr[i].secondaryMuscles[0]);
+                    makeListNode.push({
+                        name: arr[i].name,
+                        category: arr[i].category,
+                        equipment: arr[i].equipment,
+                        force: arr[i].force,
+                        level:arr[i].level,
+                        mechanic: arr[i].mechanic,
+                        instructions: arr[i].instructions,
+                        primaryMuscles: arr[i].primaryMuscles[0],
+                        secondaryMuscles: arr[i].primaryMuscles[0],
+                    });   
+                    const option = document.createElement('option'); 
+                    option.innerHTML=`<option value="${arr[i].name}">`;
+                    document.querySelector('#searchOptions').appendChild(option);
+                    
+                }
+                
+            });
+            
+        })
+ 
+    </script>
+</head>
+<body>
+    
+    <spen>
+        <h2>카테고리</h2>
+        <a href="#" onclick="makeList(nameT,'name')">name</a>
+        <a href="#" onclick="makeList(category,'category')">category</a>
+        <a href="#" onclick="makeList(equipment,'equipment')">equipment</a>
+        <a href="#" onclick="makeList(force,'force')">force</a>
+        <a href="#" onclick="makeList(level,'level')">level</a>
+        <a href="#" onclick="makeList(mechanic,'mechanic')">mechanic</a>
+        <a href="#" onclick="makeList(primaryMuscles,'primaryMuscles')">primaryMuscles</a>
+        <a href="#" onclick="makeList(secondaryMuscles,'secondaryMuscles')">secondaryMuscles</a>
+    </spen><br/>
+    <h1 id="bigName"></h1>
+    <h2 style="width: 100%;" id="bigNameInstructions"></h2>
+    <input placeholder="운동 명칭 입력" type="text" list="searchOptions"/><button onclick="search()">검색</button>
+    <datalist id="searchOptions"></datalist>
+    <br />
+    <div class="container">
+        <div style="min-width: 300px;" id="ListPage"></div>
+        <span id="detailPage" ></span>
+    </div>
+    <div >
+        <h2 style="width: 500px;" id="title"></h2>
+        <h4 id="text"></h4>
+    </div>
+</body>
+</html>

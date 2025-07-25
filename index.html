@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .container {
+      display: flex;
+      justify-content: space-between; /* 요소 사이 균등 분배 */
+    }
+    h2 {
+      width: 150px;
+    }
+    span{
+        border:2px red solid;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 10px;
+    }
+     ul {
+      list-style-position: inside; /* 점을 텍스트 안으로 */
+      padding-left: 0;             /* 왼쪽 여백 제거 */
+      margin: 0;
+      text-align: left;
+    }
+  </style>
+    <script>
+        let makeList=[{
+            id:"",
+            name: "",
+            category: "",
+            equipment: "",
+            force: "",
+            level:"",
+            mechanic: "",
+            instructions: [],
+            primaryMuscles: [],
+            secondaryMuscles: [],
+        }];
+        let category =[];
+        let equipment =[];
+        let force =[];
+        let level =[];
+        let mechanic =[];
+        //let instructions =[];
+        let primaryMuscles =[];
+        let secondaryMuscles =[];
+        function checkEx(text){
+            console.log(text);
+           switch(text){
+                case 'strength':
+                    document.querySelector('#title').textContent='근력 운동'
+                    document.querySelector('#text').textContent='근육의 힘을 키우기 위한 전반적인 훈련 (예: 스쿼트, 데드리프트 등)';
+                    return;
+                case 'stretching':
+                    document.querySelector('#title').textContent='스트레칭'
+                    document.querySelector('#text').textContent='유연성 향상 및 부상 예방을 위한 근육 늘리기 운동';
+                    return;
+                case 'plyometrics':
+                    document.querySelector('#title').textContent='플라이오메트릭스'
+                    document.querySelector('#text').textContent='점프, 반동 등을 통한 폭발적 근력 훈련 (예: 박스 점프)';
+                    return;
+                case 'strongman':
+                    document.querySelector('#title').textContent='스트롱맨'
+                    document.querySelector('#text').textContent='무거운 물체 들어 옮기기 등 실전형 최대근력 훈련 (예: 타이어 뒤집기)';
+                    return;
+                case 'powerlifting':
+                    document.querySelector('#title').textContent='파워리프팅'
+                    document.querySelector('#text').textContent='데드리프트, 스쿼트, 벤치프레스 3종목 최대 중량 경쟁 운동';
+                    return;
+                case 'cardio':
+                    document.querySelector('#title').textContent='유산소 운동'
+                    document.querySelector('#text').textContent='심폐지구력 향상을 위한 운동 (예: 달리기, 자전거)';
+                    return;
+                case 'olympic weightlifting':
+                    document.querySelector('#title').textContent='올림픽 역도	스내치'
+                    document.querySelector('#text').textContent='클린앤저크 중심의 기술 중심 중량 운동';
+                    return;
+                case 'body only':
+                    document.querySelector('#title').textContent='맨몸 운동'
+                    document.querySelector('#text').textContent='기구 없이 자기 체중 이용';
+                    return;
+                case 'machine':
+                    document.querySelector('#title').textContent='운동 기구'
+                    document.querySelector('#text').textContent='운동 기구(머신) 사용';
+                    return;
+                case 'other':
+                    document.querySelector('#title').textContent='기타'
+                    document.querySelector('#text').textContent='기타 장비 또는 분류 불명';
+                    return;
+                case 'foam roll':
+                    document.querySelector('#title').textContent='폼롤러'
+                    document.querySelector('#text').textContent='근막 이완 및 마사지용 도구';
+                    return;
+                case 'kettlebells':
+                    document.querySelector('#title').textContent='케틀벨'
+                    document.querySelector('#text').textContent='손잡이가 달린 무거운 추';
+                    return;
+                case 'dumbbell':
+                    document.querySelector('#title').textContent='덤벨'
+                    document.querySelector('#text').textContent='한 손에 드는 아령';
+                    return;
+                case 'cable':
+                    document.querySelector('#title').textContent='케이블 머신'
+                    document.querySelector('#text').textContent='케이블과 풀리를 이용한 운동기구';
+                    return;
+                case 'barbell':
+                    document.querySelector('#title').textContent='바벨'
+                    document.querySelector('#text').textContent='긴 막대에 무게추를 다는 중량 기구';
+                    return;
+                case 'medicine ball':
+                    document.querySelector('#title').textContent='메디신 볼'
+                    document.querySelector('#text').textContent='무거운 공 형태의 운동 도구';
+                    return;
+                case 'bands':
+                    document.querySelector('#title').textContent='저항 밴드'
+                    document.querySelector('#text').textContent='탄력 밴드';
+                    return;
+                case 'exercise ball':
+                    document.querySelector('#title').textContent='운동 볼'
+                    document.querySelector('#text').textContent='짐볼, 균형 잡기 및 코어 강화용 볼';
+                    return;
+                case 'e-z curl bar':
+                    document.querySelector('#title').textContent='이지 컬 바'
+                    document.querySelector('#text').textContent='곡선형 바벨, 팔 근육 운동에 적합';
+                    return;
+                case 'pull':
+                    document.querySelector('#title').textContent='풀(Pull) 운동'
+                    document.querySelector('#text').textContent='등, 이두, 전완근 등 몸의 뒤쪽 근육들을 주로 사용하는 동작으로, 턱걸이, 로우, 데드리프트 등';
+                    return;
+                case 'push':
+                    document.querySelector('#title').textContent='푸쉬(Push) 운동'
+                    document.querySelector('#text').textContent='가슴, 어깨, 삼두, 코어 근육 등 몸의 앞쪽 근육들을 주로 사용하는 동작으로, 푸쉬업, 벤치프레스, 숄더프레스 등';
+                    return;
+                case 'static':
+                    document.querySelector('#title').textContent='스태틱(Static) 운동 (등척성 운동)'
+                    document.querySelector('#text').textContent='근육의 길이 변화 없이 힘을 유지하는 운동으로, 벽을 밀거나 철봉에 매달리는 동작 등이 예시입니다. 근력 유지 및 근지구력 향상에 효과적';
+                    return;
+                case 'compound':
+                    document.querySelector('#title').textContent='복합 운동'
+                    document.querySelector('#text').textContent='여러 관절과 여러 근육을 동시에 사용하는 운동 예: 스쿼트, 벤치프레스, 데드리프트 등 효율적으로 많은 근육을 사용하여 힘과 근육량 증가에 효과적';
+                    return;
+                case 'isolation':
+                    document.querySelector('#title').textContent='고립 운동'
+                    document.querySelector('#text').textContent='특정 근육이나 근육군 하나만 집중적으로 단독 자극하는 운동 예: 바이셉 컬, 레그 익스텐션 등 약한 근육을 강화하거나 근육 모양 다듬기에 효과적';
+                    return;                                                                                                                                                                                                                                                                                                                      
+                default:
+                    return document.querySelector('#text').textContent='값이 없습니다.';
+                }
+
+        }
+        window.addEventListener('DOMContentLoaded',()=>{
+  
+             fetch('https://raw.githubusercontent.com/kimbongkum/ict4e/master/exercises.json')
+            .then(res => res.json())
+            .then(exercise => {
+                arr = Object.values(exercise)[0]
+                for (let i=0;i<arr.length;i++) {
+                    category.push(arr[i].category);
+                    equipment.push(arr[i].equipment);
+                    force.push(arr[i].force);
+                    level.push(arr[i].level);
+                    mechanic.push(arr[i].mechanic);
+                    primaryMuscles.push(arr[i].primaryMuscles[0]);
+                    secondaryMuscles.push(arr[i].secondaryMuscles[0]);
+                }
+                
+                function test(string=[],nm,name){
+                    //string.map(str => trimObjectStrings(str));
+                    const arrys = [...new Set(string)];
+                    const h3 = document.createElement('h2');
+                    h3.innerHTML=`<a href="#" onclick="checkEx()>${name}</a>`;
+                    const sdsd = document.querySelector(`#id${nm}`).appendChild(h3).innerText=name;
+                    console.log(sdsd.innerHTML=`<a href="#" onclick="checkEx()>${name}</a>`);
+                    for(let i=0;i<arrys.length; i++) {
+                        const li = document.createElement('ul');  
+                        if(string===category||string===equipment||string===force||string===mechanic){
+                            li.innerHTML = `<li><a href="#" onclick="checkEx(this.textContent);">${arrys[i]}</a></li>`;
+                        }
+                        else{
+                            li.innerHTML = `<li>${arrys[i]}</li>`;
+                        }
+                        document.querySelector(`#id${nm}`).appendChild(li);
+                    }
+                }
+                
+                test(category,1,'근력, 스트레칭');
+                test(equipment,2,'사용 기구');
+                test(force,3,'풀-푸쉬-스태틱 운동');
+                test(level,4,'운동 레벨');
+                test(mechanic,5,'고립, 복합');
+                test(primaryMuscles,6,'메인 타격 부위');
+                test(secondaryMuscles,7,'보조 타격 부위');
+                
+
+            });
+            
+        })
+ 
+    </script>
+</head>
+<body>
+    <h1>데이터 설명</h1>
+    <div class="container">
+        <span id="id1"></span>
+        <span id="id2"></span>
+        <span id="id3"></span>
+        <span id="id4"></span>
+        <span id="id5"></span>
+        <span id="id6"></span>
+        <span id="id7"></span>
+    </div>
+    <div >
+        <h2 style="width: 500px;" id="title"></h2>
+        <h4 id="text"></h4>
+    </div>
+</body>
+</html>
